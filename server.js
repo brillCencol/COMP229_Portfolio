@@ -14,7 +14,7 @@ mongoose.connect(config.mongoUri, {
 })
 
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to My Portfolio application." });
+  res.json({ message: "Welcome to User application. WITH MONGOOSE" });
 });
 
 app.listen(config.port, (err) => {

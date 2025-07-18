@@ -1,51 +1,25 @@
-import Navbar from "@/components/Navbar"
-import Footer from "@/components/Footer"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import project1Image from "/jano.jfif"
-import project2Image from "/jano.jfif"
-import project3Image from "/jano.jfif"
-import project4Image from "/jano.jfif"
+import { useEffect, useState } from "react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function ProjectPage() {
-  // Project data
-  const projects = [
-    {
-      id: 1,
-      title: "E-Commerce Platform",
-      description:
-        "A full-featured online store built with React and integrated with a headless CMS for content management.",
-      image: project1Image,
-      tags: ["React", "Redux", "Tailwind CSS", "Stripe"],
-      link: "#",
-    },
-    {
-      id: 2,
-      title: "Task Management App",
-      description:
-        "A productivity application that helps teams organize and track their projects with real-time updates.",
-      image: project2Image,
-      tags: ["React", "Firebase", "Material UI"],
-      link: "#",
-    },
-    {
-      id: 3,
-      title: "Portfolio Website",
-      description:
-        "A responsive portfolio website for a professional photographer showcasing their work with a modern gallery.",
-      image: project3Image,
-      tags: ["HTML/CSS", "JavaScript", "GSAP"],
-      link: "#",
-    },
-    {
-      id: 4,
-      title: "Restaurant Booking System",
-      description: "An online reservation system that allows customers to book tables and manage their reservations.",
-      image: project4Image,
-      tags: ["Node.js", "Express", "MongoDB", "React"],
-      link: "#",
-    },
-  ]
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const res = await fetch('http://localhost:3000/api/projects');
+        const data = await res.json();
+        setProjects(data);
+      } catch (error) {
+        console.error("Failed to fetch projects:", error);
+      }
+    };
+
+    fetchProjects();
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -63,7 +37,7 @@ export default function ProjectPage() {
           <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
             {projects.map((project) => (
               <Card
-                key={project.id}
+                key={project._id}
                 className="group overflow-hidden shadow-xl rounded-3xl border-0 bg-white/90 hover:scale-[1.03] hover:shadow-2xl transition-all duration-300"
               >
                 <div className="relative h-56 w-full overflow-hidden">
@@ -79,7 +53,7 @@ export default function ProjectPage() {
                   </CardTitle>
                   <CardDescription>
                     <div className="flex flex-wrap gap-2 mt-3">
-                      {project.tags.map((tag) => (
+                      {(project.tags || []).map((tag) => (
                         <span key={tag} className="bg-blue-100 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full shadow-sm">
                           {tag}
                         </span>
@@ -91,7 +65,7 @@ export default function ProjectPage() {
                   <p>{project.description}</p>
                 </CardContent>
                 <CardFooter className="pt-0 flex justify-end">
-                  <a href={project.link} target="_blank" rel="noopener noreferrer">
+                  <a href={project.link || "#"} target="_blank" rel="noopener noreferrer">
                     <Button variant="default" className="rounded-full px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-md transition-colors duration-200">
                       View Project
                     </Button>
@@ -105,5 +79,5 @@ export default function ProjectPage() {
 
       <Footer />
     </div>
-  )
+  );
 }

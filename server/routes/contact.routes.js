@@ -1,18 +1,10 @@
-import express from 'express'
-import contactCtrl from '../controllers/contact.controller.js'
+import express from 'express';
+import contactCtrl from '../controllers/contact.controller.js';
+import { requireSignin, hasAuthorization } from '../helpers/auth.helper.js'
 
-const router = express.Router()
+const router = express.Router();
 
 router.route('/contacts')
-  .get(contactCtrl.list)
-  .post(contactCtrl.create)
-  .delete(contactCtrl.removeAll);
+  .post(contactCtrl.create);
 
-router.route('/contacts/:contactId')
-  .get(contactCtrl.read)
-  .put(contactCtrl.update)
-  .delete(contactCtrl.remove)
-
-router.param('contactId', contactCtrl.contactByID)
-
-export default router
+export default router;

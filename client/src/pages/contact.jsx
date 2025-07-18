@@ -11,8 +11,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 export default function ContactPage() {
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    firstname: "",
+    lastname: "",
     email: "",
     phone: "",
     message: "",
@@ -26,14 +26,36 @@ export default function ContactPage() {
     }))
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    // In a real application, you would send this data to your server
-    console.log("Form submitted:", formData)
+  const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    // For now, we'll just redirect to the home page as specified in the requirements
-    navigate("/")
+  try {
+    const response = await fetch('http://localhost:3000/api/contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    });
+
+    const text = await response.text();
+    const json = text ? JSON.parse(text) : {};
+
+    console.log("🔁 Response status:", response.status);
+    console.log("📦 Response data:", json);
+
+    if (response.ok) {
+      alert(json.message || "Message sent successfully!");
+      navigate("/");
+    } else {
+      alert("Error: " + (json.error || "Something went wrong"));
+    }
+  } catch (err) {
+    console.error("❌ Network error:", err);
+    alert("Error submitting form: " + err.message);
   }
+};
+
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -213,16 +235,16 @@ export default function ContactPage() {
                     <div className="space-y-2">
                       <Label htmlFor="firstName">First Name</Label>
                       <Input
-                        id="firstName"
-                        name="firstName"
-                        value={formData.firstName}
+                        id="firstname"
+                        name="firstname"
+                        value={formData.firstname}
                         onChange={handleChange}
                         required
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="lastName">Last Name</Label>
-                      <Input id="lastName" name="lastName" value={formData.lastName} onChange={handleChange} required />
+                      <Label htmlFor="lastname">Last Name</Label>
+                      <Input id="lastname" name="lastname" value={formData.lastname} onChange={handleChange} required />
                     </div>
                   </div>
 

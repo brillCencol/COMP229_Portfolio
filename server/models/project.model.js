@@ -30,6 +30,18 @@ const ProjectSchema = new mongoose.Schema({
     type: String,
     required: 'Description is required'
   },
+  image: {
+    type: String,
+    default: '' // Optional: URL to image
+  },
+  tags: {
+    type: [String],
+    default: [] // Optional: e.g. ["React", "MongoDB"]
+  },
+  link: {
+    type: String,
+    default: '' // Optional: project link
+  },
   created: {
     type: Date,
     default: Date.now

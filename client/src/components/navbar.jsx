@@ -12,6 +12,7 @@ export default function Navbar() {
     { name: "Projects", href: "/projects" },
     { name: "Services", href: "/services" },
     { name: "Contact", href: "/contact" },
+    { name: "Sign In", href: "/login" }
   ]
 
   const isActive = (path) => location.pathname === path
