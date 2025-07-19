@@ -1,34 +1,31 @@
 import mongoose from 'mongoose';
 
-const QualificationSchema = new mongoose.Schema({
-  title: {
+const EducationSchema = new mongoose.Schema({
+  schoolName: {
     type: String,
     trim: true,
-    required: 'Title is required'
+    required: 'School name is required'
   },
-  firstname: {
+  location: {
+    type: String,
+    trim: true
+  },
+  degree: {
     type: String,
     trim: true,
-    required: 'First name is required'
+    required: 'Degree is required'
   },
-  lastname: {
+  fieldOfStudy: {
     type: String,
-    trim: true,
-    required: 'Last name is required'
+    trim: true
   },
-  email: {
+  gradMonth: {
     type: String,
-    trim: true,
-    match: [/.+\@.+\..+/, 'Please fill a valid email address'],
-    required: 'Email is required'
+    required: 'Graduation month is required'
   },
-  completion: {
-    type: Date,
-    required: 'Completion date is required'
-  },
-  description: {
+  gradYear: {
     type: String,
-    required: 'Description is required'
+    required: 'Graduation year is required'
   },
   created: {
     type: Date,
@@ -36,4 +33,4 @@ const QualificationSchema = new mongoose.Schema({
   }
 });
 
-export default mongoose.model('Qualification', QualificationSchema);
+export default mongoose.model('Education', EducationSchema);
