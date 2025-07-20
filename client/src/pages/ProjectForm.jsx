@@ -35,28 +35,28 @@ const ProjectForm = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const { title, completion, description, image, tags, link, firstname, lastname, email } = projectData;
+  e.preventDefault();
+  const { title, completion, description, image, tags, link, firstname, lastname, email } = projectData;
 
-    try {
-      const res = await fetch('http://localhost:3000/api/projects', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, completion, description, image, tags, link, firstname, lastname, email })
-      });
+  try {
+    const res = await fetch('http://localhost:3000/api/projects', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title, completion, description, image, tags, link, firstname, lastname, email })
+    });
 
-      const data = await res.json();
+    const data = await res.json();
 
-      if (res.ok) {
-        alert('✅ Project added successfully!');
-        navigate('/admin/dashboard');
-      } else {
-        setProjectData({ ...projectData, error: data.error });
-      }
-    } catch (err) {
-      setProjectData({ ...projectData, error: 'Server error. Please try again later.' });
+    if (res.ok) {
+      alert('✅ Project added successfully!');
+      navigate('/project/list'); // ✅ Redirect to project list
+    } else {
+      setProjectData({ ...projectData, error: data.error });
     }
-  };
+  } catch (err) {
+    setProjectData({ ...projectData, error: 'Server error. Please try again later.' });
+  }
+};
 
   return (
     <>

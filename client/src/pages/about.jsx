@@ -1,8 +1,24 @@
+import React, { useEffect, useState } from 'react'
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { Button } from "@/components/ui/button"
 
 export default function AboutPage() {
+  const [educations, setEducations] = useState([])
+
+  useEffect(() => {
+    const fetchEducation = async () => {
+      try {
+        const res = await fetch('http://localhost:3000/api/qualifications')
+        const data = await res.json()
+        setEducations(data)
+      } catch (err) {
+        console.error('Error fetching education:', err)
+      }
+    }
+    fetchEducation()
+  }, [])
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -76,22 +92,25 @@ export default function AboutPage() {
             </div>
           </div>
 
-          {/* Education & Experience */}
+          {/* ✅ Education & Experience (dynamic) */}
           <div className="mt-20 max-w-4xl mx-auto">
             <h2 className="text-2xl font-bold mb-8 text-center">Education & Experience</h2>
             <div className="space-y-6">
-              <div className="bg-slate-50 p-6 rounded-lg border border-slate-100">
-                <h3 className="font-semibold text-lg">Software Engineering Technician</h3>
-                <p className="text-slate-500">Centennial College | 2024 - Present</p>
-              </div>
-              <div className="bg-slate-50 p-6 rounded-lg border border-slate-100">
-                <h3 className="font-semibold text-lg">IBM Solutions</h3>
-                <p className="text-slate-500">Java Developer | 2007 - 2009</p>
-              </div>
-              <div className="bg-slate-50 p-6 rounded-lg border border-slate-100">
-                <h3 className="font-semibold text-lg">Bachelor of Science in Computer Science</h3>
-                <p className="text-slate-500">De La Salle Lipa - University | 2007</p>
-              </div>
+              {educations.length === 0 ? (
+                <p className="text-center text-slate-500">No education records available.</p>
+              ) : (
+                educations.map((edu) => (
+                  <div key={edu._id} className="bg-slate-50 p-6 rounded-lg border border-slate-100">
+                    <h3 className="font-semibold text-lg">{edu.degree}</h3>
+                    <p className="text-slate-500">
+                      {edu.schoolName} | {edu.gradMonth} {edu.gradYear}
+                    </p>
+                    {edu.fieldOfStudy && (
+                      <p className="text-slate-400 text-sm">{edu.fieldOfStudy}</p>
+                    )}
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>

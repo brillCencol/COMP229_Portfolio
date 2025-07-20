@@ -19,17 +19,17 @@ export default function AdminDashboard() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Link
-            to="/admin/education"
+            to="/education/list" 
             className="bg-blue-600 text-white px-4 py-3 rounded text-center hover:bg-blue-700"
           >
-            Add Education
+            Education
           </Link>
 
           <Link
-            to="/admin/project"
+            to="/project/list"
             className="bg-green-600 text-white px-4 py-3 rounded text-center hover:bg-green-700"
           >
-            Add Project
+            Project
           </Link>
 
           <button
