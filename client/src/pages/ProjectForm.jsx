@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import SignInNavbar from '@/components/SignInNavbar';
 
 const tagOptions = [
@@ -22,6 +22,33 @@ const ProjectForm = () => {
   });
 
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  // 🔁 Fetch existing project if in edit mode
+  useEffect(() => {
+    if (id) {
+      fetch(`http://localhost:3000/api/projects/${id}`)
+        .then(res => res.json())
+        .then(data => {
+          setProjectData({
+            title: data.title || '',
+            completion: data.completion?.split('T')[0] || '',
+            description: data.description || '',
+            image: data.image || '',
+            tags: data.tags || [],
+            link: data.link || '',
+            firstname: data.firstname || '',
+            lastname: data.lastname || '',
+            email: data.email || '',
+            error: ''
+          });
+        })
+        .catch(err => {
+          console.error('❌ Failed to fetch project:', err);
+          setProjectData(prev => ({ ...prev, error: 'Error loading project' }));
+        });
+    }
+  }, [id]);
 
   const handleChange = (name) => (e) => {
     setProjectData({ ...projectData, [name]: e.target.value });
@@ -35,34 +62,38 @@ const ProjectForm = () => {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  const { title, completion, description, image, tags, link, firstname, lastname, email } = projectData;
+    e.preventDefault();
+    const {
+      title, completion, description, image,
+      tags, link, firstname, lastname, email
+    } = projectData;
 
-  try {
-    const res = await fetch('http://localhost:3000/api/projects', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ title, completion, description, image, tags, link, firstname, lastname, email })
-    });
+    try {
+      const res = await fetch(`http://localhost:3000/api/projects${id ? `/${id}` : ''}`, {
+        method: id ? 'PUT' : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title, completion, description, image, tags, link, firstname, lastname, email })
+      });
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (res.ok) {
-      alert('✅ Project added successfully!');
-      navigate('/project/list'); // ✅ Redirect to project list
-    } else {
-      setProjectData({ ...projectData, error: data.error });
+      if (res.ok) {
+        alert(id ? '✅ Project updated successfully!' : '✅ Project added successfully!');
+        navigate('/project/list');
+      } else {
+        setProjectData(prev => ({ ...prev, error: data.error }));
+      }
+    } catch (err) {
+      console.error('❌ Submission error:', err);
+      setProjectData(prev => ({ ...prev, error: 'Server error. Please try again later.' }));
     }
-  } catch (err) {
-    setProjectData({ ...projectData, error: 'Server error. Please try again later.' });
-  }
-};
+  };
 
   return (
     <>
       <SignInNavbar />
       <div className="max-w-3xl mx-auto mt-10 p-6 border rounded shadow">
-        <h2 className="text-3xl font-bold mb-6">Add Project</h2>
+        <h2 className="text-3xl font-bold mb-6">{id ? 'Edit Project' : 'Add Project'}</h2>
 
         {projectData.error && (
           <p className="text-red-600 mb-4">{projectData.error}</p>
@@ -116,7 +147,7 @@ const ProjectForm = () => {
             type="submit"
             className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded font-semibold"
           >
-            Submit
+            {id ? 'Update Project' : 'Submit'}
           </button>
         </form>
       </div>

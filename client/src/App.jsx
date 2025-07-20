@@ -51,8 +51,14 @@ function App() {
             </ProtectedRoute>
           }
         />
-
-
+        <Route
+          path="/project/edit/:id"
+          element={
+            <ProtectedRoute requiredRole="admin">
+              <ProjectForm />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/education/list"
           element={
