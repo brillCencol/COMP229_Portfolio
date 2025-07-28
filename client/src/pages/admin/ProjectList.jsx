@@ -30,6 +30,7 @@ const ProjectList = () => {
       })
       if (res.ok) {
         fetchProjects()
+        window.alert("Project deleted successfully.");
       }
     } catch (err) {
       alert('Delete failed')

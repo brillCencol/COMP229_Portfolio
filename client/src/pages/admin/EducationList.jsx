@@ -25,11 +25,12 @@ const EducationList = () => {
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this education entry?')) return
     try {
-      const res = await fetch(`http://localhost:3000/api/qualifications/${id}`, {
+      const res = await fetch(`${API_BASE}/qualifications/${id}`, {
         method: 'DELETE'
       })
       if (res.ok) {
         fetchEducations()
+        window.alert("Education entry deleted successfully.");
       }
     } catch (err) {
       alert('Delete failed')

@@ -147,7 +147,7 @@ const ProjectForm = () => {
 
           <button
             type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded font-semibold"
+            className="bg-black text-white px-4 py-3 rounded text-center cursor-pointer hover:bg-gray-800"
           >
             {id ? 'Update Project' : 'Submit'}
           </button>

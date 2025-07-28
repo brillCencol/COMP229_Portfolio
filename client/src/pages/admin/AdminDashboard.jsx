@@ -21,28 +21,28 @@ export default function AdminDashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Link
             to="/education/list" 
-            className="bg-black text-white px-4 py-3 rounded text-center hover:bg-gray-800"
+            className="bg-black text-white px-4 py-3 rounded text-center cursor-pointer hover:bg-gray-800"
           >
             Education
           </Link>
 
           <Link
             to="/project/list"
-            className="bg-black text-white px-4 py-3 rounded text-center hover:bg-gray-800"
+            className="bg-black text-white px-4 py-3 rounded text-center cursor-pointer hover:bg-gray-800"
           >
             Project
           </Link>
 
           <Link
             to="/register"
-            className="bg-black text-white px-4 py-3 rounded text-center hover:bg-gray-800"
+            className="bg-black text-white px-4 py-3 rounded text-center cursor-pointer hover:bg-gray-800"
           >
             List All Users
           </Link>
 
           <button
             onClick={handleLogout}
-            className="bg-black text-white px-4 py-3 rounded text-center hover:bg-gray-800"
+            className="bg-black text-white px-4 py-3 rounded text-center cursor-pointer hover:bg-gray-800"
           >
             Sign Out
           </button>
