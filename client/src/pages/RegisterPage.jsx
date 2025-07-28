@@ -88,6 +88,12 @@ const RegisterPage = () => {
         setEditId(null);
         setMakeAdmin(false);
 
+        // If current user updated their own info and is not admin, update localStorage
+        if (!isAdmin && editId === currentUser?._id) {
+          const updatedUser = { ...currentUser, name: values.name, email: values.email };
+          localStorage.setItem('user', JSON.stringify(updatedUser));
+        }
+
         // If current user edited their own account AND removed their admin role:
         if (editId === currentUser?._id && isAdmin && !makeAdmin) {
           localStorage.removeItem("user");
@@ -107,11 +113,15 @@ const RegisterPage = () => {
         }, 100);
 
       } else {
-        if (data.error === "Email is already taken") {
+        const errorMessage = data.error || 'Unknown error';
+        if (errorMessage.toLowerCase().includes('email') && errorMessage.toLowerCase().includes('exist')) {
           window.alert("That email is already in use.");
+        } else {
+          window.alert(errorMessage);
         }
-        setValues({ ...values, error: data.error, loading: false });
+        setValues({ ...values, error: errorMessage, loading: false });
       }
+
     } catch (err) {
       setValues({ ...values, error: 'Server error. Try again later.', loading: false });
     }
