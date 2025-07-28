@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import Navbar from '@/components/navbar' 
+import Navbar from '@/components/Navbar' 
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL
 
