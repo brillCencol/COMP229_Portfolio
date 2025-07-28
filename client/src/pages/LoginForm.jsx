@@ -3,6 +3,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import Navbar from '@/components/navbar';
 import Footer from '@/components/footer';
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL
+
 const LoginForm = () => {
   const [values, setValues] = useState({
     email: '',
@@ -22,7 +24,7 @@ const LoginForm = () => {
     setValues({ ...values, loading: true });
 
     try {
-      const res = await fetch('http://localhost:3000/api/auth/signin', {
+      const res = await fetch(`${API_BASE}/auth/signin`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

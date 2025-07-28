@@ -3,13 +3,15 @@ import Navbar from "@/components/Navbar"
 import Footer from '../components/Footer'
 import { Button } from "@/components/ui/button"
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL
+
 export default function AboutPage() {
   const [educations, setEducations] = useState([])
 
   useEffect(() => {
     const fetchEducation = async () => {
       try {
-        const res = await fetch('http://localhost:3000/api/qualifications')
+        const res = await fetch(`${API_BASE}/qualifications`)
         const data = await res.json()
         setEducations(data)
       } catch (err) {

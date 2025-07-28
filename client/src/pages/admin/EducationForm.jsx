@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import Navbar from '@/components/navbar'
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL
+
 const EducationForm = () => {
   const navigate = useNavigate()
   const { id } = useParams()
@@ -18,7 +20,7 @@ const EducationForm = () => {
   // Fetch existing education data if editing
   useEffect(() => {
     if (id) {
-      fetch(`http://localhost:3000/api/qualifications/${id}`)
+      fetch(`${API_BASE}/qualifications/${id}`)
         .then(res => res.json())
         .then(data => {
           setFormData({
@@ -45,7 +47,7 @@ const EducationForm = () => {
     e.preventDefault()
 
     try {
-      const res = await fetch(`http://localhost:3000/api/qualifications${id ? `/${id}` : ''}`, {
+      const res = await fetch(`${API_BASE}/qualifications${id ? `/${id}` : ''}`, {
         method: id ? 'PUT' : 'POST',
         headers: {
           'Content-Type': 'application/json'

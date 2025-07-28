@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Navbar from '@/components/navbar'
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL
+
 const ProjectList = () => {
   const [projects, setProjects] = useState([])
   const navigate = useNavigate()
@@ -12,7 +14,7 @@ const ProjectList = () => {
 
   const fetchProjects = async () => {
     try {
-      const res = await fetch('http://localhost:3000/api/projects')
+      const res = await fetch(`${API_BASE}/projects`)
       const data = await res.json()
       setProjects(data)
     } catch (err) {
@@ -23,7 +25,7 @@ const ProjectList = () => {
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this project?')) return
     try {
-      const res = await fetch(`http://localhost:3000/api/projects/${id}`, {
+      const res = await fetch(`${API_BASE}/projects/${id}`, {
         method: 'DELETE'
       })
       if (res.ok) {

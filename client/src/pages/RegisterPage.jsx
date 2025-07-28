@@ -3,6 +3,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL
+
 const RegisterPage = () => {
   const navigate = useNavigate();
   const currentUser = JSON.parse(localStorage.getItem('user'));
@@ -41,7 +43,7 @@ const RegisterPage = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch('http://localhost:3000/api/users', {
+      const res = await fetch(`${API_BASE}/users`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       const data = await res.json();
@@ -60,8 +62,8 @@ const RegisterPage = () => {
     setValues({ ...values, loading: true });
 
     const endpoint = editId
-      ? `http://localhost:3000/api/users/${editId}`
-      : 'http://localhost:3000/api/users';
+      ? `${API_BASE}/users/${editId}`
+      : `${API_BASE}/users`;
     const method = editId ? 'PUT' : 'POST';
 
     try {
@@ -137,7 +139,7 @@ const RegisterPage = () => {
     if (!confirmed) return;
 
     try {
-      const res = await fetch(`http://localhost:3000/api/users/${id}`, {
+      const res = await fetch(`${API_BASE}/users/${id}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`

@@ -8,6 +8,8 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL
+
 export default function ContactPage() {
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
@@ -30,7 +32,7 @@ export default function ContactPage() {
   e.preventDefault();
 
   try {
-    const response = await fetch('http://localhost:3000/api/contacts', {
+    const response = await fetch(`${API_BASE}/contacts`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

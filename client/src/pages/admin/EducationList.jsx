@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Navbar from '@/components/navbar' 
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL
+
 const EducationList = () => {
   const [educations, setEducations] = useState([])
   const navigate = useNavigate()
@@ -12,7 +14,7 @@ const EducationList = () => {
 
   const fetchEducations = async () => {
     try {
-      const res = await fetch('http://localhost:3000/api/qualifications')
+      const res = await fetch(`${API_BASE}/qualifications`)
       const data = await res.json()
       setEducations(data)
     } catch (err) {

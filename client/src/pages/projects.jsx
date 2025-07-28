@@ -4,13 +4,15 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL
+
 export default function ProjectPage() {
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const res = await fetch('http://localhost:3000/api/projects');
+        const res = await fetch(`${API_BASE}/projects`);
         const data = await res.json();
         setProjects(data);
       } catch (error) {

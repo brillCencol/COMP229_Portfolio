@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Navbar from '@/components/navbar';
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL
+
 const tagOptions = [
   'HTML', 'CSS', 'JavaScript', 'React', 'Node.js',
   'Express', 'MongoDB', 'Tailwind CSS', 'Bootstrap', 'TypeScript'
@@ -27,7 +29,7 @@ const ProjectForm = () => {
   // 🔁 Fetch existing project if in edit mode
   useEffect(() => {
     if (id) {
-      fetch(`http://localhost:3000/api/projects/${id}`)
+      fetch(`${API_BASE}/projects/${id}`)
         .then(res => res.json())
         .then(data => {
           setProjectData({
@@ -69,7 +71,7 @@ const ProjectForm = () => {
     } = projectData;
 
     try {
-      const res = await fetch(`http://localhost:3000/api/projects${id ? `/${id}` : ''}`, {
+      const res = await fetch(`${API_BASE}/projects${id ? `/${id}` : ''}`, {
         method: id ? 'PUT' : 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title, completion, description, image, tags, link, firstname, lastname, email })
