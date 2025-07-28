@@ -39,13 +39,16 @@ export default function AboutPage() {
             <div className="flex flex-col justify-center">
               <h2 className="text-2xl font-bold mb-4">Brill John Torino</h2>
               <p className="text-slate-600 mb-6">
-                I'm a passionate web developer with over 5 years of experience creating modern, responsive websites and
-                applications. I specialize in front-end development with expertise in React and modern JavaScript.
+                I'm a passionate web developer and a current Software Engineering student at 
+                Centennial College, with over 2 years of self-taught experience building modern, 
+                responsive websites and applications. I enjoy working across the full stack, 
+                with a strong interest in both front-end and back-end development.
               </p>
               <p className="text-slate-600 mb-6">
-                My approach combines technical expertise with creative problem-solving to deliver solutions that not
-                only meet but exceed client expectations. I'm constantly learning and exploring new technologies to stay
-                at the forefront of web development.
+                I love coding and bringing ideas to life through functional and user-friendly interfaces. 
+                My approach combines technical skills with creative problem-solving to deliver solutions 
+                that exceed expectations. I'm always exploring new tools and technologies to stay current 
+                and continuously improve as a developer.
               </p>
               <div className="mt-4">
                 <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
