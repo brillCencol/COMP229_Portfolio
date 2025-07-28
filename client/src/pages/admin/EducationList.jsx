@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import SignInNavbar from '@/components/SignInNavbar' // ✅ Navbar
+import Navbar from '@/components/navbar' 
 
 const EducationList = () => {
   const [educations, setEducations] = useState([])
@@ -38,7 +38,7 @@ const EducationList = () => {
 
   return (
     <div>
-      <SignInNavbar />
+      <Navbar />
 
       <div className="max-w-4xl mx-auto px-6 py-10">
         <Link

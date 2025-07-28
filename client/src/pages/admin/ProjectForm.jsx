@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import SignInNavbar from '@/components/SignInNavbar';
+import Navbar from '@/components/navbar';
 
 const tagOptions = [
   'HTML', 'CSS', 'JavaScript', 'React', 'Node.js',
@@ -91,7 +91,7 @@ const ProjectForm = () => {
 
   return (
     <>
-      <SignInNavbar />
+      <Navbar />
       <div className="max-w-3xl mx-auto mt-10 p-6 border rounded shadow">
         <h2 className="text-3xl font-bold mb-6">{id ? 'Edit Project' : 'Add Project'}</h2>
 

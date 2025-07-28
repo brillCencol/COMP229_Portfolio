@@ -7,11 +7,11 @@ import ProjectPage from "@/pages/projects";
 import ServicesPage from "@/pages/services";
 import LoginForm from "@/pages/LoginForm";
 import RegisterPage from "@/pages/RegisterPage";
-import AdminDashboard from '@/pages/AdminDashboard'
-import EducationForm from '@/pages/EducationForm'
-import ProjectForm from '@/pages/ProjectForm'
-import EducationList from '@/pages/EducationList'
-import ProjectList from '@/pages/ProjectList'
+import AdminDashboard from '@/pages/admin/AdminDashboard'
+import EducationForm from '@/pages/admin/EducationForm'
+import ProjectForm from '@/pages/admin/ProjectForm'
+import EducationList from '@/pages/admin/EducationList'
+import ProjectList from '@/pages/admin/ProjectList'
 
 function App() {
   return (

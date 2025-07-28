@@ -7,12 +7,12 @@ export default function Navbar() {
   const navigate = useNavigate()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [user, setUser] = useState(null)
-  const [showDropdown, setShowDropdown] = useState(false)
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"))
-    if (storedUser) {
-      setUser(storedUser)
+    const storedUser = localStorage.getItem("user")
+    const storedToken = localStorage.getItem("token")
+    if (storedUser && storedToken) {
+      setUser(JSON.parse(storedUser))
     }
   }, [])
 
@@ -34,13 +34,12 @@ export default function Navbar() {
   ]
 
   return (
-    <header className="bg-white border-b border-slate-200">
+    <header className="bg-slate-50 border-b border-slate-200 shadow-sm">
       <nav className="container mx-auto px-4 flex items-center justify-between py-4">
-        {/* Logo */}
         <div className="flex-shrink-0">
           <Link to="/" className="flex items-center">
             <Logo />
-            <span className="ml-3 text-xl font-semibold">Brill John Torino</span>
+            <span className="ml-3 text-xl font-semibold text-slate-700">Brill John Torino</span>
           </Link>
         </div>
 
@@ -50,21 +49,27 @@ export default function Navbar() {
             <Link
               key={item.name}
               to={item.href}
-              className={`text-sm font-medium transition-colors hover:text-slate-900 ${isActive(item.href) ? "text-slate-900" : "text-slate-500"
-                }`}
+              className={`text-sm font-medium transition-colors hover:text-slate-900 ${
+                isActive(item.href) ? "text-slate-900" : "text-slate-500"
+              }`}
             >
               {item.name}
             </Link>
           ))}
 
-          {/* User Dropdown */}
           {user ? (
             <div className="relative group">
               <div className="text-sm font-medium text-slate-700 cursor-pointer">
                 Hi, {user.name}
               </div>
+              <div className="absolute right-0 mt-2 w-44 bg-white border rounded shadow-lg z-10 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all duration-150">
+                <button
+                  onClick={() => navigate('/register')}
+                  className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 cursor-pointer"
+                >
+                  Profile
+                </button>
 
-              <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow-lg z-10 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all duration-150">
                 {user.role === 'admin' && (
                   <button
                     onClick={() => navigate('/admin/dashboard')}
@@ -73,6 +78,7 @@ export default function Navbar() {
                     Admin Dashboard
                   </button>
                 )}
+
                 <button
                   onClick={handleLogout}
                   className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 cursor-pointer"
@@ -84,8 +90,9 @@ export default function Navbar() {
           ) : (
             <Link
               to="/login"
-              className={`text-sm font-medium transition-colors hover:text-slate-900 ${isActive("/login") ? "text-slate-900" : "text-slate-500"
-                }`}
+              className={`text-sm font-medium transition-colors hover:text-slate-900 ${
+                isActive("/login") ? "text-slate-900" : "text-slate-500"
+              }`}
             >
               Sign In
             </Link>
@@ -120,7 +127,6 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Optional: Mobile Navigation Links */}
       {mobileMenuOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-slate-200">
@@ -128,10 +134,11 @@ export default function Navbar() {
               <Link
                 key={item.name}
                 to={item.href}
-                className={`block px-3 py-2 rounded-md text-base font-medium ${isActive(item.href)
-                  ? "bg-slate-100 text-slate-900"
-                  : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
-                  }`}
+                className={`block px-3 py-2 rounded-md text-base font-medium ${
+                  isActive(item.href)
+                    ? "bg-slate-100 text-slate-900"
+                    : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {item.name}
@@ -150,10 +157,11 @@ export default function Navbar() {
             ) : (
               <Link
                 to="/login"
-                className={`block px-3 py-2 rounded-md text-base font-medium ${isActive("/login")
-                  ? "bg-slate-100 text-slate-900"
-                  : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
-                  }`}
+                className={`block px-3 py-2 rounded-md text-base font-medium ${
+                  isActive("/login")
+                    ? "bg-slate-100 text-slate-900"
+                    : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Sign In

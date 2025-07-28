@@ -5,12 +5,12 @@ import authCtrl from '../controllers/auth.controller.js'
 const router = express.Router()
 
 router.route('/users')
-  .get(authCtrl.requireSignin, userCtrl.list)
-  .post(userCtrl.create)
+  .get(authCtrl.requireSignin, authCtrl.hasAdminRole, userCtrl.list) // only admins can list users
+  .post(userCtrl.create); // anyone can register
 
 router.route('/users/:userId')
   .get(authCtrl.requireSignin, userCtrl.read)
-  .put(authCtrl.requireSignin, authCtrl.hasAuthorization, userCtrl.update)
+  .put(authCtrl.requireSignin, authCtrl.hasAdminOrSelf, userCtrl.update)
   .delete(authCtrl.requireSignin, authCtrl.hasAuthorization, userCtrl.remove)
 
 router.param('userId', userCtrl.userByID)

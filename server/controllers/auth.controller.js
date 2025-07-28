@@ -58,4 +58,25 @@ const hasAuthorization = (req, res, next) => {
     next()
 }
 
-export default { signin, signout, requireSignin, hasAuthorization }
+const hasAdminRole = (req, res, next) => {
+  if (req.auth && req.auth.role === 'admin') {
+    next()
+  } else {
+    return res.status(403).json({
+      error: "Admin access required"
+    })
+  }
+}
+
+const hasAdminOrSelf = (req, res, next) => {
+  const isSelf = req.profile && req.auth && req.profile._id == req.auth._id;
+  const isAdmin = req.auth && req.auth.role === 'admin';
+
+  if (isSelf || isAdmin) {
+    next();
+  } else {
+    return res.status(403).json({ error: "User is not authorized" });
+  }
+};
+
+export default { signin, signout, requireSignin, hasAuthorization, hasAdminRole, hasAdminOrSelf }

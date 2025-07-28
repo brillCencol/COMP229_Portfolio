@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import SignInNavbar from '@/components/SignInNavbar';
+import Navbar from '@/components/navbar';
+import Footer from '@/components/footer';
 
 const LoginForm = () => {
   const [values, setValues] = useState({
@@ -38,8 +39,8 @@ const LoginForm = () => {
           return;
         }
 
-        localStorage.setItem('token', JSON.stringify(data.token));
-        localStorage.setItem('user', JSON.stringify(data.user));
+        localStorage.setItem("token", data.token); // ✅ plain string
+        localStorage.setItem("user", JSON.stringify(data.user)); // ✅ JSON string
 
         if (data.user.role === 'admin') {
           navigate('/admin/dashboard');
@@ -56,7 +57,7 @@ const LoginForm = () => {
 
   return (
     <>
-      <SignInNavbar />
+      <Navbar />
       <div className="max-w-md mx-auto mt-10 p-6 border shadow rounded">
         <h2 className="text-2xl font-semibold mb-6 text-center">Login</h2>
         {values.error && <p className="text-red-600 mb-4">{values.error}</p>}
@@ -80,9 +81,9 @@ const LoginForm = () => {
           <button
             type="submit"
             disabled={values.loading}
-            className={`w-full text-white py-2 rounded ${
-              values.loading ? 'bg-gray-400' : 'bg-blue-600 hover:bg-blue-700'
-            }`}
+            className={`w-full bg-black text-white px-4 py-3 rounded text-center hover:bg-gray-800 cursor-pointer ${values.loading ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
+
           >
             {values.loading ? 'Logging in...' : 'Login'}
           </button>
@@ -95,11 +96,12 @@ const LoginForm = () => {
               to="/register"
               className="text-blue-600 hover:underline font-medium"
             >
-              Register here
+              Register
             </Link>
           </p>
         </div>
       </div>
+      <Footer />
     </>
   );
 };
